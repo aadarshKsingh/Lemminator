@@ -1,0 +1,63 @@
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <title>Lemminator</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+</head>
+<body class="bg-[#0D1321]" style="background-color:#0D1321;">
+<nav style="background-color:#1D2D44; color:white; position:fixed; padding-top:10px; padding-bottom:10px;" class="fixed top-0 left-0 w-full shadow-lg z-10">
+    <div class="mx-auto px-4 py-4 border-2 border-red-500 w-full">
+        <div class="flex items-center">
+            <!-- Lemminator on the extreme left with 10px padding -->
+            <a class="text-lg font-bold text-white" style="padding-left: 10px;">Lemminator</a>
+
+            <!-- Centered Feed and Saved links -->
+            <div class="flex-1 flex justify-center" style="margin-left:-100px;">
+                <div class="flex space-x-4">
+                    <a th:href="@{/feed}" class="text-white hover:text-blue-500">Feed</a>
+                    <a th:href="@{/saved}" class="text-white hover:text-blue-500">Saved</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="flex flex-col justify-center w-full mx-auto mt-96" style="margin-top:100px;">
+    <div class="flex flex-col items-left w-4/12 mx-auto p-5 my-2 rounded-xl bg-[#3E5C76]" style="background-color:#3E5C76;" th:each="posts : ${posts}">
+        <div class="text-white text-left items-left">
+            <div class="flex flex-row justify-between items-center">
+                 <span class="flex flex-row gap-x-1">
+                 <!-- Creator -->
+                        <a th:href="@{${posts.creator.actor_id}}"><p th:text="${posts.creator.name}"></p></a>
+                 <!-- Community -->
+                        On
+                        <a th:href="@{${posts.community.actor_id}}"><p th:text="${posts.community.title}"></p></a>
+                 </span>
+                <button class="ml-auto">Save</button>
+            </div>
+            <h1 class="font-bold text-2xl" th:text="${posts.post.name}"></h1>
+            <p class="text-sm" th:text="${posts.post.published}"></p>
+            <a th:href="${posts.post.url}"><img class="object-contain py-5" th:src="${posts.post.thumbnail_url}" alt="Post Image"/></a>
+            <p class="break-words text-md" th:utext="${posts.post.body}"></p>
+            <div class="flex flex-row w-full text-2xl items-stretch justify-around">
+                <button class="flex flex-row items-center justify-center text-white rounded-lg p-2 mx-2 ">
+                    <span class="material-symbols-outlined text-4xl">arrow_upward</span>
+                    <span th:text="${posts.counts.upvotes}"></span>
+                </button>
+                <button class="flex flex-row items-center justify-center text-white rounded-lg p-2 mx-2">
+                    <span class="material-symbols-outlined">arrow_downward</span>
+                    <span th:text="${posts.counts.downvotes}"></span>
+                </button>
+                <button class="flex flex-row items-center justify-center text-white rounded-lg p-2 mx-2">
+                    <span class="material-symbols-outlined text-2xl">comment</span>
+                    <span th:text="${posts.counts.comments}"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
